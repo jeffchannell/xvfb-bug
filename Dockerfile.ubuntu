@@ -1,0 +1,12 @@
+ARG version=20.10
+FROM ubuntu:${version}
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update \
+ && apt -y upgrade
+RUN apt -y install gjs sudo xvfb
+RUN useradd -ms /bin/bash demo \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists*
+WORKDIR /home/demo
+COPY . .
+ENTRYPOINT [ "./entrypoint.sh" ]

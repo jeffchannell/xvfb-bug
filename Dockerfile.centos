@@ -1,0 +1,9 @@
+ARG version=8
+FROM centos:${version}
+RUN yum -y update
+RUN yum -y install dbus gjs sudo xorg-x11-server-Xvfb
+RUN dbus-uuidgen > /var/lib/dbus/machine-id \
+ && useradd -ms /bin/bash demo
+WORKDIR /home/demo
+COPY . .
+ENTRYPOINT [ "./entrypoint.sh" ]
